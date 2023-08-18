@@ -1,0 +1,39 @@
+import { Offcanvas, Stack, Button, NavLink } from "react-bootstrap";
+import { useShoppingCart } from "../../context/ShoppingCartContext";
+import AuthContext from "../../context/context";
+import { useContext } from "react";
+import storeItems from '../../assets/data/items.json';
+import { CartItem } from "../CartItem/CartItem";
+import { Link } from "react-router-dom";
+
+
+export function ShoppingCart({ isOpen }) {
+  const { closeCart, cartItems} = useShoppingCart();
+//   const {allProducts} = useContext(AuthContext);
+
+  return (
+    <Offcanvas show={isOpen} onHide={closeCart} placement="end">
+      <Offcanvas.Header closeButton>
+        <Offcanvas.Title>Cart</Offcanvas.Title>
+      </Offcanvas.Header>
+      <Offcanvas.Body>
+        <Stack gap={3}>
+          {cartItems.map(item => (
+            <CartItem key={item.id} {...item} />
+          ))}
+          <div className="ms-auto fw-bold fs-5">
+            Total{" "}
+            ${ cartItems.reduce((total, cartItem) => {
+                const item = storeItems.find(i => i.id === cartItem.id);
+                return total + (item?.price || 0) * cartItem.quantity;
+              }, 0)
+            }
+          </div>
+          <Button style={{
+            color: 'white'
+          }} as={Link} to='/thanks' variant="dark"> Buy </Button>
+        </Stack>
+      </Offcanvas.Body>
+    </Offcanvas>
+  );
+}

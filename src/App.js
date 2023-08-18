@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import AboutPage from './pages/AboutPage/AboutPage';
+import HomePage from './pages/HomePage/HomePage';
+import LandingPage from './pages/LandingPage/LandingPage';
+import ProductsPage from './pages/ProductsPage/ProductsPage';
+import SignupSignIn from './components/SignUpIn/SignupSignIn';
+import { AuthProvider } from './context/context';
+import PremiumContent from './pages/PremiumContentPage/PremiumContent';
+import { ShoppingCartProvider } from './context/ShoppingCartContext';
+import Thanks from './components/Thanks/Thanks';
 
 function App() {
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  <ShoppingCartProvider>
+    <AuthProvider>
+      <Routes>
+          <Route path='/' element={<LandingPage />}>
+            <Route path='/home' element={<HomePage />}/>
+            <Route path='/products' element={<ProductsPage />}/>
+            <Route path='/auth' element={<SignupSignIn />}/>
+            <Route path='/premium' element={<PremiumContent />}/>
+            <Route path='/thanks' element={<Thanks />}/>
+          </Route>
+      </Routes>
+    </AuthProvider>
+  </ShoppingCartProvider>
+
   );
 }
 

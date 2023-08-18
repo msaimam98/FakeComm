@@ -1,0 +1,17 @@
+.footer {
+    background: grey;
+    padding: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0 !important;
+}
+
+.footer img {
+    margin: 3.5px;
+}
+
+.image-icon {
+    width: 25px;
+    height: auto;
+}
